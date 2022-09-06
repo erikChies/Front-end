@@ -8,32 +8,27 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/task', function (req, res) {
-   res.writeHead(200, {'Content-Type': 'application/json'});
-   const resp = '{ "list": [' 
-      + '{ "id": 1, "title": "Live cycle & State", "category": "Done" },'
-      + '{ "id": 2, "title": "Events", "category": "Done" }'
-   +']}';
+app.get('/pass', function (req, res) {
+   res.writeHead(200, { 'Content-Type': 'application/json' });
+   const resp = '{ "list": ['
+      + '{ "id": 1, "login": "rafaelDestroi@gmail.com", "senha": "senha1234", "tipoSenha": "1" },'
+      + '{ "id": 2, "login": "Cadeado academia", "senha": "2484", "tipoSenha": "2" }'
+      + ']}';
    res.end(resp);
 });
 
-
-app.post('/task', function (req, res) {
+app.post('/pass', function (req, res) {
    console.log(req.body);
-   res.writeHead(200, {'Content-Type': 'text/html'});
-   res.end('ok');
+   res.writeHead(200, { 'Content-Type': 'text/html' });
+   res.end('Password saved');
 });
-
-
 
 var server = app.listen(3000, function () {
 
    var host = server.address().address;
    var port = server.address().port;
 
-   console.log("Example app listening at http://%s:%s", host, port);
-
+   console.log("PassKeeper listening at http://%s:%s", host, port);
 });
-
