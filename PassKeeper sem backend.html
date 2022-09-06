@@ -73,16 +73,6 @@
                 }
             }
 
-            componentDidMount() {
-                fetch('http//localhost:3000/pass')
-                    .then((response) => response.json())
-                    .then((responseJson) => {
-                        this.setState({
-                            list: responseJson.list
-                        })
-                    })
-            }
-
             render() {
 
                 let lista = []
@@ -153,21 +143,22 @@
             }
 
             handleSubmitForm = (ob) => {
-                ob.preventDefault();
+                const keysList = this.state.listaChaves;
 
-                fetch('http://localhost:3000/pass', {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        list: this.state.list
-                    }),
-                }).then((response) => reponse.text())
-                    .then((responseText) => {
-                        alert('Response: ' + responseText)
+                keysList.push({
+                    id: this.state.listaChaves.length + 1,
+                    login: this.state.login,
+                    senha: this.state.senha,
+                    tipoSenha: this.state.tipoSenha
                 })
+
+                this.setState(state => ({
+                    login: '',
+                    senha: '',
+                    tipoSenha: '',
+                    listaChaves: keysList
+                }))
+                ob.preventDefault();
             }
         }
 
