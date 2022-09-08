@@ -1,14 +1,20 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var url = require('url');
+var allowCrossDomain = function(req, res, next) {
+   res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+   res.header('Access-Control-Allow-Headers', 'Content-Type');
+   next();
+}
 
 app.use(express.static('public'));
-// parse application/json
+
 app.use(bodyParser.json());
 
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(allowCrossDomain);
 
 app.get('/pass', function (req, res) {
    res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -20,15 +26,12 @@ app.get('/pass', function (req, res) {
 });
 
 app.post('/pass', function (req, res) {
+   console.log("REQUISIÇÃO AO POST:");
    console.log(req.body);
    res.writeHead(200, { 'Content-Type': 'text/html' });
    res.end('Password saved');
 });
 
-var server = app.listen(3000, function () {
-
-   var host = server.address().address;
-   var port = server.address().port;
-
-   console.log("PassKeeper listening at http://%s:%s", host, port);
+app.listen(3000, function () {
+   console.log("PassKeeper listening");
 });

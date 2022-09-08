@@ -74,13 +74,13 @@
             }
 
             componentDidMount() {
-                fetch('http//localhost:3000/pass')
+                fetch('http://localhost:3000/pass')
                     .then((response) => response.json())
                     .then((responseJson) => {
-                        this.setState({
-                            listaChaves: responseJson.list
-                        })
+                    this.setState({
+                        listaChaves: responseJson.list
                     })
+                });
             }
 
             render() {
@@ -125,6 +125,7 @@
                                 <br />
                                 <br />
                                 <button type="submit" value="Submit">Salvar</button>
+                                <button value="Send" onClick={this.handleSendForm}>Enviar</button>
                                 <br />
                                 <br />
 
@@ -135,12 +136,6 @@
                                     </ul>
                                 </div>
                             </form>
-                        </div>
-
-                        <div>
-                            <form onSubmit={this.handleSendForm}>
-                                <button type="submit" value="Submit" onChange={this.handleSendForm}>Enviar</button>
-                            </form>    
                         </div>
                     </section>
                 )
@@ -179,20 +174,19 @@
 
             handleSendForm = (ob) => {
                 ob.preventDefault();
-
                 fetch('http://localhost:3000/pass', {
-                    method: 'POST',
+                    method: 'POST',  
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        list: this.state.list
+                        lista: this.state.listaChaves
                     }),
-                }).then((response) => reponse.text())
+                }).then((response) => response.text())
                     .then((responseText) => {
-                        alert('Response: ' + responseText)
-                })
+                        alert('Resposta back-end: ' + responseText);
+                    });
             }
         }
 
